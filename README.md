@@ -1,2 +1,2 @@
 # Bonus
-Bonus is a pure Python UI toolkit wrapped around tkinter. 
+Bonus is a pure Python UI library wrapped around tkinter. 

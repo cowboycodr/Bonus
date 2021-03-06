@@ -1,8 +1,17 @@
+'''
+Every application made with Bonus will have to
+inherit the App class. The App class is the main class
+of all Bonus applications. It creates the window, 
+controls the window, and decorates the window. 
+The App class provides lots of methods to allow for 
+easy control of the window. 
+'''
+
 import tkinter as tk
 from tkinter import Button as TkinterButton
+from tkinter import Label as TkinterLabel
 from screeninfo import get_monitors
 import time
-
 class App:
     def __init__(self, title='App', size=(None, None), position=(None, None)):
 
@@ -63,6 +72,33 @@ class App:
                 }
             )
     
+    def build_label(self, widget):
+        widget = widget[1]
+        
+        label = TkinterLabel(
+            master=self.window,
+            anchor=widget['anchor'],
+            bg=widget['bg'],
+            bitmap=widget['bitmap'],
+            bd=widget['bd'],
+            cursor=widget['cursor'],
+            font=widget['font'],
+            fg=widget['fg'],
+            height=widget['height'],
+            image=widget['image'],
+            justify=widget['justify'],
+            padx=widget['padx'],
+            pady=widget['pady'],
+            relief=widget['relief'],
+            text=widget['text'],
+            textvariable=widget['textvariable'],
+            underline=widget['underline'],
+            wraplength=widget['wraplength'],
+            width=widget['width']
+        )
+        
+        label.pack()
+    
     def build_button(self, widget):
         widget = widget[1]
         
@@ -97,6 +133,8 @@ class App:
         for widget in self.widgets:
             if widget[0] == 'button':
                 self.build_button(widget)
+            elif widget[0] == 'label':
+                self.build_label(widget)
 
     def bind(self, sequence: str, protocol):
         

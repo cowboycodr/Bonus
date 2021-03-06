@@ -1,3 +1,10 @@
+'''
+The button widget provides simple access to Tkinter's
+button. The arguments are the same as Tkinter's and 
+the only difference is certain layouts can change 
+the size and position of this button. 
+'''
+
 class Button:
     def __init__(self, activebackground=None, activeforeground=None, bd=None, bg=None, command=None, fg=None, font=None, height=None, highlightcolor=None, image=None, justify=None, padx=None, pady=None, relief=None, state=None, size_hint=(1, 1), text=None, underline=None, width=None, wraplength=None):
         

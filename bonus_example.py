@@ -1,6 +1,7 @@
 from src.app import App
 from src.uix.layouts.layout import Layout
 from src.uix.widgets.button import Button
+from src.uix.widgets.label import Label
 
 class Polaris(App):
     def __init__(self):
@@ -9,7 +10,10 @@ class Polaris(App):
         )
         
     def build(self):
-        return Layout(self, Button(text='Bonus'))
+        l = Layout(self)
+        l.add_widget(Button(text='Button'))
+        l.add_widget(Label(text='label working?'))
+        return l
     
 if __name__ == '__main__':
     Polaris().run()

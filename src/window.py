@@ -1,8 +1,9 @@
 import tkinter as tk
 from screeninfo import get_monitors
 import time
-class App:
-    def __init__(self, title='App', size=(None, None), position=(None, None)):
+
+class Window:
+    def __init__(self, title='Window', size=(None, None), position=(None, None)):
 
         if size[0] == None or size[1] == None:
             self.size = (800, 600)
@@ -78,9 +79,6 @@ class App:
         self.height = height
         self.size = (self.width, self.height)
 
-    def title(self, title):
-        self.window.title(title)
-
     def close_protocol(self):
         self.running = False
 
@@ -121,13 +119,17 @@ class App:
             'dt' : self.dt
         }
 
-    def center(self, resize=True, relocate=True):
+    def center(self, resize=True, relocate=True, width=None, height=None):
+        if width == None:
+            width = self.window.winfo_screenwidth()
+        if height == None:
+            height = self.window.winfo_screenheight()
+        
         if resize:
-            self.resize(int(self.window.winfo_screenwidth() / 2), int(self.window.winfo_screenheight() / 2))
+            self.resize(int(width / 2), int(height / 2))
         
         if relocate:
-            self.relocate(int((self.window.winfo_screenwidth() / 2) - self.width / 2), int((self.window.winfo_screenheight() / 2) - self.height / 2))
-        
+            self.relocate(int((width / 2) - self.width / 2), int((height / 2) - self.height / 2))
 
     def run(self):
 

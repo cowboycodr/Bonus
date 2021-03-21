@@ -4,6 +4,7 @@ import time
 
 class Window:
     def __init__(self, title='Window', size=(None, None), position=(None, None)):
+        self.window_title = title
 
         if size[0] == None or size[1] == None:
             self.size = (800, 600)
@@ -14,7 +15,7 @@ class Window:
         self.height = self.size[1]
 
         self.window = tk.Tk()
-        self.window.title(title)
+        self.window.title(self.window_title)
         self.resize(self.width, self.height)
 
         if position[0] == None or position[1] == None:
@@ -49,6 +50,9 @@ class Window:
                 {'<F11>' : self.fullscreen}
             ]
 
+    def title(self, text):
+        self.window_title = text
+        self.window.title(text)
 
     def fullscreen(self, event=None):
         if self.window.attributes('-fullscreen'):
@@ -58,6 +62,13 @@ class Window:
 
     def normal(self, event=None):
         self.window.wm_state('normal')
+
+    def bind(self, sequence, func):
+        self.binds.append(
+            {sequence, func}
+        )
+        
+        self.window.bind(sequence, func)
 
     def relocate(self, x, y):
         if x < 0:
@@ -85,7 +96,7 @@ class Window:
         self.window.destroy()
         self.on_close()
 
-    def on_close(self, context=0):
+    def on_close(self):
         pass
 
     def on_change(self, changes):

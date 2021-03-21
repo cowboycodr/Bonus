@@ -15,7 +15,7 @@ class Window:
         self.height = self.size[1]
 
         self.window = tk.Tk()
-        self.window.title(self.window_title)
+        self.title(self.window_title)
         self.resize(self.width, self.height)
 
         if position[0] == None or position[1] == None:
@@ -30,6 +30,7 @@ class Window:
         self.relocate(self.position_x, self.position_y)
 
         self.running = True
+        self.closed = False
         self.dt = 0.0
 
         self.changes = {
@@ -93,10 +94,15 @@ class Window:
     def close_protocol(self):
         self.running = False
 
-        self.window.destroy()
-        self.on_close()
+        self.on_close(self.window)
+        self.closed = True
 
-    def on_close(self):
+        try:
+            self.window.destroy()
+        except:
+            pass
+
+    def on_close(self, window):
         pass
 
     def on_change(self, changes):
@@ -147,9 +153,7 @@ class Window:
         loop = 0.0
         end_loop = 0.0
 
-        while True:
-            if not self.running:
-                break
+        while self.running:
             
             self.update(self.changes)
             self.window.update()
@@ -164,6 +168,9 @@ class Window:
                 'dt' : self.dt
             }
             end_loop = time.time()
+            
+        if self.closed == False:
+            self.close_protocol()
 
     def update(self, changes):
         pass

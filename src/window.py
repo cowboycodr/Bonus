@@ -33,6 +33,7 @@ class Window:
 
         self.running = True
         self.closed = False
+        self.FPS = 60
         self.dt = 0.0
 
         self.changes = {
@@ -154,7 +155,10 @@ class Window:
         if relocate:
             self.relocate(int((width / 2) - self.width / 2), int((height / 2) - self.height / 2))
 
-    def run(self):
+    def run(self, FPS=None):
+
+        if FPS != None:
+            self.FPS = FPS
 
         loop = 0.0
         end_loop = 0.0
@@ -174,6 +178,8 @@ class Window:
                 'dt' : self.dt
             }
             end_loop = time.time()
+
+            time.sleep(1/self.FPS)
             
         if self.closed == False:
             self.close_protocol()

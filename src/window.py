@@ -1,9 +1,13 @@
 import tkinter as tk
 import os
 import time
+
 class Window:
-    def __init__(self, title='Window', size=(None, None), position=(None, None)):
-        self.window_title = title
+    def __init__(self, title=None, size=(None, None), position=(None, None)):
+        if title == None:
+            self.window_title = self.__class__.__name__.split('Window', 1)[0]
+        else: 
+            self.window_title = title
 
         if size[0] == None or size[1] == None:
             self.size = (800, 600)
@@ -45,10 +49,8 @@ class Window:
         }
 
         self.window.protocol('WM_DELETE_WINDOW', self.close_protocol)
-        
         self.window.bind('<Configure>', self.change_protocol)
         self.window.bind('<F11>', self.fullscreen)
-
         self.binds = [
                 {'<Configure>' : self.change_protocol},
                 {'<F11>' : self.fullscreen}
@@ -143,15 +145,13 @@ class Window:
             'dt' : self.dt
         }
 
-    def center(self, resize=True, relocate=True, width=None, height=None):
-        if width == None:
-            width = self.window.winfo_screenwidth()
-        if height == None:
-            height = self.window.winfo_screenheight()
-        
+    def center(self, resize=True, relocate=True, size_hint_width=1, size_hint_height=1):
+        width = self.window.winfo_screenwidth()
+        height = self.window.winfo_screenheight()
+
         if resize:
-            self.resize(int(width / 2), int(height / 2))
-        
+            self.resize(int((width / 2) * size_hint_width), int((height / 2) * size_hint_height))
+
         if relocate:
             self.relocate(int((width / 2) - self.width / 2), int((height / 2) - self.height / 2))
 

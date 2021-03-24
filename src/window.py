@@ -17,12 +17,15 @@ class Window:
         self.width = self.size[0]
         self.height = self.size[1]
 
-        self.window_icon = "assets\\images\\transparent_logo.ico"
-
         self.window = tk.Tk()
         self.title(self.window_title)
-        self.window.iconbitmap(default=tk.PhotoImage(self.window_icon))
         self.resize(self.width, self.height)
+
+        try:
+            self.window_icon = "assets\\images\\transparent_logo.ico"
+            self.window.iconbitmap(default=tk.PhotoImage(self.window_icon))
+        except:
+            self.window_icon = None
 
         if position[0] == None or position[1] == None:
             self.position = (self.window.winfo_x(), self.window.winfo_y())
@@ -65,9 +68,6 @@ class Window:
             self.window.attributes('-fullscreen', False)
         else: 
             self.window.attributes('-fullscreen', True)
-
-    def normal(self, event=None):
-        self.window.wm_state('normal')
 
     def bind(self, sequence, func):
         self.window.bind(sequence, func)

@@ -7,5 +7,5 @@ class BonusWindow(Window):
         
 if __name__ == '__main__':
     app = App(BonusWindow())
-    app.window.center(resize=True, size_hint_width=1, size_hint_height=1, pos_hint_x=2, pos_hint_y=0)
+    app.window.center()
     app.run()

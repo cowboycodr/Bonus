@@ -51,10 +51,6 @@ class Window:
         self.window.protocol('WM_DELETE_WINDOW', self.close_protocol)
         self.window.bind('<Configure>', self.change_protocol)
         self.window.bind('<F11>', self.fullscreen)
-        self.binds = [
-                {'<Configure>' : self.change_protocol},
-                {'<F11>' : self.fullscreen}
-            ]
 
     def icon(self, filepath=None):
         self.window_icon = filepath
@@ -74,10 +70,6 @@ class Window:
         self.window.wm_state('normal')
 
     def bind(self, sequence, func):
-        self.binds.append(
-            {sequence, func}
-        )
-        
         self.window.bind(sequence, func)
 
     def relocate(self, x, y):
@@ -145,7 +137,7 @@ class Window:
             'dt' : self.dt
         }
 
-    def center(self, resize=True, relocate=True, size_hint_width=1, size_hint_height=1):
+    def center(self, resize=True, relocate=True, size_hint_width=1, size_hint_height=1, pos_hint_x=1, pos_hint_y=1):
         width = self.window.winfo_screenwidth()
         height = self.window.winfo_screenheight()
 
@@ -153,7 +145,10 @@ class Window:
             self.resize(int((width / 2) * size_hint_width), int((height / 2) * size_hint_height))
 
         if relocate:
-            self.relocate(int((width / 2) - self.width / 2), int((height / 2) - self.height / 2))
+            x = int(((width / 2) - self.width / 2) * pos_hint_x)
+            y = int(((height / 2) - self.height / 2) * pos_hint_y)
+            
+            self.relocate(x=x, y=y)
 
     def run(self, FPS=None):
 

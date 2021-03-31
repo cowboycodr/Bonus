@@ -1,11 +1,11 @@
-from src.app import App
-from src.window import Window
+from src.core.app import App
+from src.core.window import Window
+from src.core.widgets.button import Button
 
-class BonusWindow(Window):
+class CarWindow(Window):
     def __init__(self):
         super().__init__()
         
 if __name__ == '__main__':
-    app = App(BonusWindow())
-    app.window.center()
+    app = App(CarWindow())
     app.run()

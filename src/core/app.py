@@ -1,4 +1,4 @@
-from src.window import Window
+from src.core.window import Window
 
 class App:
     def __init__(self, window=None, title=None, size=(None, None), position=(None, None)):

@@ -92,7 +92,35 @@ class Window:
         self.height = height
         self.size = (self.width, self.height)
 
+    def serialize(self, filepath=None):
+        if filepath == None:
+            filepath = "src\core\storage\window.txt"
+            
+        with open(os.path.join('{}'.format(filepath)), 'w') as file:
+            file.write(f'[{self.window_title}]\n')
+            file.write(f'x:{self.position_x}\n')
+            file.write(f'y:{self.position_y}\n')
+            file.write(f'w:{self.width}\n')
+            file.write(f'h:{self.height}\n')
+            
+    def deserialize(self, filepath=None):
+        if filepath == None:
+            filepath = 'src\core\storage\window.txt'
+         
+        with open(os.path.join('{}'.format(filepath)), 'r') as file:
+            lines  = [line for line in file]
+            
+        x = int(lines[1][2:])
+        y = int(lines[2][2:])
+        width = int(lines[3][2:])
+        height = int(lines[4][2:])
+        
+        self.relocate(x, y)
+        self.resize(width, height)
+
     def close_protocol(self):
+        self.serialize()
+        
         self.running = False
 
         self.on_close(self.window)
@@ -150,7 +178,9 @@ class Window:
             
             self.relocate(x=x, y=y)
 
-    def run(self, FPS=None):
+    def run(self, FPS=None, deserialize=True):
+        if deserialize:
+            self.deserialize()
 
         if FPS != None:
             self.FPS = FPS

@@ -8,4 +8,3 @@ class BonusWindow(Window):
 if __name__ == '__main__':
     app = App(BonusWindow())
     app.run()
-    app.reset_window()

@@ -16,5 +16,11 @@ class App:
         if position[0] != None and position[1] != None:
             self.window.relocate(position[0], position[1])
     
-    def run(self):
+    def reset_window(self):
+        self.window._reset_serialization()
+    
+    def run(self, deserialize=True):
+        if deserialize:
+            self.window._deserialize()
+            
         self.window.run()

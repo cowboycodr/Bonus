@@ -7,6 +7,7 @@ class ExampleWindow(Window):
         
 if __name__ == '__main__':
     app = App(ExampleWindow())
+    app.window.center()
     app.run()
     
     # remove this code if you would like the application to save the size and location of the window

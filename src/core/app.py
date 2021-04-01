@@ -21,6 +21,9 @@ class App:
     
     def reset_window(self):
         self.window._reset_serialization()
+        
+        if self.window.running:
+            self.window._deserialize()
     
     def run(self, deserialize=True):
         self.window.run()

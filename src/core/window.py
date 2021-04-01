@@ -8,7 +8,7 @@ class Window:
             self.window_title = self.__class__.__name__.split('Window', 1)[0]
         else: 
             self.window_title = title
-
+            
         if size[0] == None or size[1] == None:
             self.size = (800, 600)
         else: 
@@ -22,8 +22,8 @@ class Window:
         self.resize(self.width, self.height)
 
         try:
-            self.window_icon = "assets\\images\\transparent_logo.ico"
-            self.window.iconbitmap(default=tk.PhotoImage(self.window_icon))
+            self.window_icon = 'assets\\images\\transparent_logo.ico'
+            self.icon(self.window_icon)
         except:
             self.window_icon = None
 
@@ -73,6 +73,10 @@ class Window:
         self.window.bind(sequence, func)
 
     def relocate(self, x, y):
+        self.position = (x, y)
+        self.position_x = x
+        self.position_y = y
+        
         if x < 0:
             x = '-{}'.format(x)
         else:
@@ -84,6 +88,7 @@ class Window:
             y = '+{}'.format(y)
 
         self.window.geometry('{}x{}{}{}'.format(self.width, self.height, x, y))
+            
 
     def resize(self, width, height):
         self.window.geometry('{}x{}'.format(width, height))
@@ -130,12 +135,12 @@ class Window:
             file.write(f'h:600\n')
 
     def close_protocol(self):
-        self._serialize()
-        
         self.running = False
 
         self.on_close(self.window)
         self.closed = True
+
+        self._serialize()
 
         try:
             self.window.destroy()

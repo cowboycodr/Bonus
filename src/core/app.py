@@ -8,7 +8,10 @@ class App:
             self.window = Window()
             
         if deserialize:
-            self.window._deserialize()
+            try:
+                self.window._deserialize()
+            except:
+                self.window._serialize()
         
         if title != None:
             self.window.title(title)

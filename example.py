@@ -7,12 +7,11 @@ class ExampleWindow(Window):
         
         # updates per second, default FPS is 60, do not rely on it being 100% accurate
         self.FPS = 60
+        self.frame_count = 0
         
-        self.window_title = 0
-        
-    def update(self, changes):
-        self.window_title += 1
-        self.title(self.window_title)
+    # gets called everytime the window updates
+    def update(self):
+        self.frame_count += 1
     
 if __name__ == '__main__':
     app = App(ExampleWindow())

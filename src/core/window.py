@@ -1,6 +1,7 @@
 import tkinter as tk
 import os
 import time
+from pygame.time import Clock as PygameClock
 
 class Window:
     def __init__(self, title=None, size=(None, None), position=(None, None)):
@@ -41,6 +42,7 @@ class Window:
         self.running = True
         self.closed = False
         self.FPS = 60
+        self.frame_count = 0
         self.dt = 0.0
 
         self.changes = {
@@ -54,6 +56,9 @@ class Window:
         self.window.protocol('WM_DELETE_WINDOW', self.close_protocol)
         self.window.bind('<Configure>', self.change_protocol)
         self.window.bind('<F11>', self.fullscreen)
+
+    def __repr__(self):
+        return '{self.__class__.__name__}(title=\'{self.window_title}\', size={self.size}, position={self.position})'.format(self=self)
 
     def icon(self, filepath=None):
         self.window_icon = filepath
@@ -194,6 +199,15 @@ class Window:
             
             self.relocate(x=x, y=y)
 
+    def current_frame_rate(self):
+        if self.running:
+            try:
+                return round(self.frame_count / (time.time() - self.time_started))
+            except:
+                pass
+        else:
+            return -1
+
     def run(self, FPS=None, deserialize=True):
         if FPS != None:
             self.FPS = FPS
@@ -201,9 +215,14 @@ class Window:
         loop = 0.0
         end_loop = 0.0
 
+        self.time_started = time.time()
         while self.running:
             
-            self.update(self.changes)
+            try:
+                self.update(self.changes)
+            except BaseException as e:
+                raise Exception(f'Error: {e}')
+            
             self.window.update()
             
             loop = time.time()
@@ -217,7 +236,9 @@ class Window:
             }
             end_loop = time.time()
 
-            time.sleep(1/self.FPS)
+            # NOTE: Temporary: Better clock needed 
+            PygameClock().tick(self.FPS)
+            self.frame_count += 1
             
         if self.closed == False:
             self.close_protocol()

@@ -27,4 +27,4 @@ if __name__ == '__main__':
     print(app)
     
     # remove this code if you would like the application to save the size and location of the window when closed
-    # app.reset_window()
+    app.reset_window()

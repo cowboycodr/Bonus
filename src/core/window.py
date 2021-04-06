@@ -1,6 +1,9 @@
 import tkinter as tk
 import os
 import time
+
+# Hiding pygame support prompt: Thanks to pygame for the amazing clock!
+os.environ['PYGAME_HIDE_SUPPORT_PROMPT'] = 'hide'
 from pygame.time import Clock as PygameClock
 
 class Window:
@@ -183,6 +186,7 @@ class Window:
             'height' : self.height,
             'x' : self.position_x,
             'y' : self.position_y,
+            'fps' : self.avg_frame_rate(),
             'dt' : self.dt
         }
 
@@ -199,14 +203,11 @@ class Window:
             
             self.relocate(x=x, y=y)
 
-    def current_frame_rate(self):
-        if self.running:
-            try:
-                return round(self.frame_count / (time.time() - self.time_started))
-            except:
-                pass
-        else:
-            return -1
+    def avg_frame_rate(self):
+        try:
+            return round(self.frame_count / (time.time() - self.time_started))
+        except:
+            pass
 
     def run(self, FPS=None, deserialize=True):
         if FPS != None:

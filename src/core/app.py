@@ -22,6 +22,9 @@ class App:
         if position[0] != None and position[1] != None:
             self.window.relocate(position[0], position[1])
     
+    def __repr__(self):
+        return '{self.__class__.__name__}(window={self.window}, title={self.window.window_title}, size={self.window.size}, position={self.window.position})'.format(self=self)
+    
     def reset_window(self):
         self.window._reset_serialization()
         
